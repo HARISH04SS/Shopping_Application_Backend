@@ -35,6 +35,9 @@ const userController = {
         }catch(error){
             res.status(500).json({message:error.message});
         }
+    },
+    logout: async(req,res)=>{
+        res.clearCookie('token').json({message:"logout succesful"})
     }
 }
 
