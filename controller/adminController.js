@@ -2,6 +2,7 @@ const Admin = require('../models/adminSchema');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {jwtSecret} = require('../utils/config');
+const Product = require('../models/productSchema')
 const adminController = {
     register: async(req,res)=>{
         try{
@@ -38,7 +39,13 @@ const adminController = {
     },
     logout: async(req,res)=>{
         res.clearCookie('token').json({message:"logout succesful"})
-    }
+    },
+    createproduct: async (req, res) => {
+        const { productname, price, description } = req.body;
+        const newProduct = new Product({ productname, price, description });
+        await newProduct.save();
+        res.json({ msg: 'Product created successfully' });
+    },
 }
 
 module.exports = adminController;
